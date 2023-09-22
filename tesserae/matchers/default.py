@@ -253,7 +253,7 @@ class DefaultMatcher(object):
             tokens.append(self.connection.find(
                 'tokens',
                 sort=[('index', pymongo.ASCENDING)],
-                text=text.path))
+                text=text.id))
 
         return tokens
 

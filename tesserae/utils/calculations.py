@@ -1,10 +1,20 @@
 from collections import Counter
+from bson import ObjectId
 
 import numpy as np
+import pandas as pd
 from scipy.sparse import csr_matrix
-
 from tesserae.db.entities import Feature, Unit
 
+def get_text_frequencies(connection,text,feature='lemmata'):
+    result = connection.aggregate('tokens',[{'$match': {'text': ObjectId(text)}}, 
+                                            {"$project": {"_id": 0, "features": 1}},
+                                            {"$unwind": "$features."+feature},
+                                            {'$group' : {"_id" : "$features."+feature , text : {"$sum": 1}}}],
+                                  encode=False)
+    freqs = pd.DataFrame(list(result)).set_index("_id")
+
+    return freqs
 
 def get_corpus_frequencies(connection, feature, language):
     """Get frequency data for a given feature across a particular corpus
@@ -135,7 +145,7 @@ def get_feature_counts_by_text(connection, feature, text):
         csr_cols.append(mfindex)
     word_feature_matrix = csr_matrix(
         (
-            np.ones(len(csr_rows), dtype=np.bool),
+            np.ones(len(csr_rows), dtype=bool),
             (np.array(csr_rows), np.array(csr_cols))
         ),
         shape=(len(tindex2mtindex), len(findex2mfindex))
@@ -245,7 +255,7 @@ def get_inverse_text_frequencies(connection, feature, text_id):
         csr_cols.append(mfindex)
     word_feature_matrix = csr_matrix(
         (
-            np.ones(len(csr_rows), dtype=np.bool),
+            np.ones(len(csr_rows), dtype=bool),
             (np.array(csr_rows), np.array(csr_cols))
         ),
         shape=(len(tindex2mtindex), len(findex2mfindex))

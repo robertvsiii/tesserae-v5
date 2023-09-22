@@ -24,7 +24,7 @@ use the `pymongo`_ library.
 
 """
 
-from collections import Iterable, Mapping
+from collections.abc import Iterable, Mapping
 import datetime
 try:
     # Python 3.x
@@ -260,6 +260,7 @@ class TessMongoConnection():
             exists = []
 
         if len(exists) != 0:
+            result_update = self.update(exists)
             exists = [e.unique_values() for e in exists]
             new_ents = []
             for e in entity:
