@@ -7,6 +7,7 @@ from .swlist import StopwordsList
 from .text import Text
 from .token import Token
 from .unit import Unit
+from .translation import Translation
 
 entity_map = {}
 entity_map[Feature.collection] = Feature
@@ -17,6 +18,7 @@ entity_map[StopwordsList.collection] = StopwordsList
 entity_map[Text.collection] = Text
 entity_map[Token.collection] = Token
 entity_map[Unit.collection] = Unit
+entity_map[Translation.collection] = Translation
 
 __all__ = ['Entity', 'Feature', 'Match', 'MultiResult', 'Search',
-           'Text', 'Token', 'Unit']
+           'Text', 'Token', 'Unit', 'Translation']
