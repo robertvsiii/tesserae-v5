@@ -33,6 +33,8 @@ class Translation(Entity):
         "phrase", etc.
     tokens : list of tesserae.db.Token or bson.objectid.ObjectId, optional
         The tokens that make up this unit.
+    model : str, optional
+        The GPT model (or human author) used to make the translation
     snippet : str, optional
         The whole translated unit.
 
@@ -51,6 +53,8 @@ class Translation(Entity):
     unit_type : str
         How the chunk of text in this Unit was defined, e.g., "line",
         "phrase", etc.
+    model : str, optional
+        The GPT model (or human author) used to make the translation
     tokens : list of tesserae.db.Token or bson.objectid.ObjectId
         The tokens that make up this unit.
     snippet : str, optional
@@ -61,12 +65,13 @@ class Translation(Entity):
     collection = 'translations'
 
     def __init__(self, id=None, text=None, index=None, tags=None, unit_type=None,
-                 tokens=None, features=None, snippet=None):
+                 model=None, tokens=None, features=None, snippet=None):
         super(Translation, self).__init__(id=id)
         self.text: typing.Optional[typing.Union[ObjectId, Text]] = text
         self.index: typing.Optional[int] = index
         self.tags: typing.List[str] = tags if tags is not None else []
         self.unit_type: typing.Optional[str] = unit_type
+        self.model: typing.Optional[str] = model
         self.tokens: typing.List[int] = \
             tokens if tokens is not None else []
         self.snippet: typing.Optional[str] = snippet
@@ -93,6 +98,6 @@ class Translation(Entity):
     def __repr__(self):
         return (
             f'Translation(text={self.text}, index={self.index}, tags={self.tags}, '
-            f'unit_type={self.unit_type}, tokens={self.tokens}, '
+            f'unit_type={self.unit_type}, model={self.model}, tokens={self.tokens}, '
             f'snippet={self.snippet})'
         )

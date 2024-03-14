@@ -30,6 +30,8 @@ class Text(Entity):
         Full name of the text's author.
     year : int, optional
         Year that the text was written/published.
+    source : str, optional
+        Information to track down original source of text.
     path : str
         Path to .tess file
     is_prose : bool
@@ -47,6 +49,8 @@ class Text(Entity):
         Full name of the text's author.
     year : int
         Year that the text was written/published.
+    source : str, optional
+        Information to track down original source of text.
     path : str
         Path to .tess file
     is_prose : bool
@@ -72,6 +76,7 @@ class Text(Entity):
                  title=None,
                  author=None,
                  year=None,
+                 source=None,
                  path=None,
                  is_prose=False,
                  ingestion_status=None,
@@ -83,6 +88,7 @@ class Text(Entity):
         self.author: typing.Optional[str] = author
         self.is_prose: typing.Optional[bool] = is_prose
         self.year: typing.Optional[int] = year
+        self.source: typing.Optional[str] = source
         self.path: typing.Optional[str] = path
         self.ingestion_status: tuple[str, str] = tuple(ingestion_status[:2]) \
             if ingestion_status is not None \
@@ -103,7 +109,7 @@ class Text(Entity):
 
     def __repr__(self):
         return (f'Text(language={self.language}, title={self.title}, '
-                f'author={self.author}, year={self.year}, '
+                f'author={self.author}, year={self.year}, source={self.source}, '
                 f'ingestion_status={self.ingestion_status}, '
                 f'ingestion_details={self.ingestion_details}, '
                 f'path={self.path}, is_prose={self.is_prose})')
