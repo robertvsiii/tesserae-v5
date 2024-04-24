@@ -57,6 +57,8 @@ class Translation(Entity):
         The GPT model (or human author) used to make the translation
     tokens : list of tesserae.db.Token or bson.objectid.ObjectId
         The tokens that make up this unit.
+    notes : str, optional
+	Notes on the translation of this passage
     snippet : str, optional
         The whole translated unit.
         
@@ -65,7 +67,7 @@ class Translation(Entity):
     collection = 'translations'
 
     def __init__(self, id=None, text=None, index=None, tags=None, unit_type=None,
-                 model=None, tokens=None, features=None, snippet=None):
+                 model=None, tokens=None, notes=None, snippet=None):
         super(Translation, self).__init__(id=id)
         self.text: typing.Optional[typing.Union[ObjectId, Text]] = text
         self.index: typing.Optional[int] = index
@@ -74,6 +76,7 @@ class Translation(Entity):
         self.model: typing.Optional[str] = model
         self.tokens: typing.List[int] = \
             tokens if tokens is not None else []
+	self.notes: typing.Optional[str] = notes
         self.snippet: typing.Optional[str] = snippet
 
     def json_encode(self, exclude=None):
@@ -99,5 +102,5 @@ class Translation(Entity):
         return (
             f'Translation(text={self.text}, index={self.index}, tags={self.tags}, '
             f'unit_type={self.unit_type}, model={self.model}, tokens={self.tokens}, '
-            f'snippet={self.snippet})'
+            f'notes={self.notes}, snippet={self.snippet})'
         )
