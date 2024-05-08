@@ -114,7 +114,7 @@ setup(name='tesserae',
       ],
       keywords='machine_learning hyperparameters distributed_computing',
       install_requires=[
-          'cltk>=0.1.83', 'nltk>=3.2.5', 'numpy>=1.14.0', 'pymongo>=3.6.1',
+          'cltk==0.1.121', 'nltk>=3.2.5', 'numpy>=1.14.0', 'pymongo>=3.6.1',
           'scipy', 'tqdm', 'natsort', 'six'
       ],
       cmdclass={

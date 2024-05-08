@@ -76,7 +76,7 @@ class Translation(Entity):
         self.model: typing.Optional[str] = model
         self.tokens: typing.List[int] = \
             tokens if tokens is not None else []
-	self.notes: typing.Optional[str] = notes
+        self.notes: typing.Optional[str] = notes
         self.snippet: typing.Optional[str] = snippet
 
     def json_encode(self, exclude=None):
