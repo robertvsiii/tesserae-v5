@@ -25,6 +25,8 @@ class Translation(Entity):
         Database id of the text. Should not be set locally.
     text : str, optional
         The text that contains this unit.
+    unit : bson.ObjectId, optional
+        Database id of the translated unit.
     index : int, optional
         The order of this unit in the text. This is relative to Units of a
         particular type.
@@ -44,6 +46,8 @@ class Translation(Entity):
         Database id of the text. Should not be set locally.
     text : str
         The text that contains this unit.
+    unit : bson.ObjectId, optional
+        Database id of the translated unit.
     index : int
         The order of this unit in the text. This is relative to Units of a
         particular type.
@@ -67,8 +71,9 @@ class Translation(Entity):
     collection = 'translations'
 
     def __init__(self, id=None, text=None, index=None, tags=None, unit_type=None,
-                 model=None, tokens=None, notes=None, snippet=None):
+                 unit=None, model=None, tokens=None, notes=None, snippet=None):
         super(Translation, self).__init__(id=id)
+        self.unit: typing.Optional[typing.Union[ObjectId, Unit]] = unit
         self.text: typing.Optional[typing.Union[ObjectId, Text]] = text
         self.index: typing.Optional[int] = index
         self.tags: typing.List[str] = tags if tags is not None else []
@@ -100,7 +105,7 @@ class Translation(Entity):
 
     def __repr__(self):
         return (
-            f'Translation(text={self.text}, index={self.index}, tags={self.tags}, '
+            f'Translation(unit={self.unit}, text={self.text}, index={self.index}, tags={self.tags}, '
             f'unit_type={self.unit_type}, model={self.model}, tokens={self.tokens}, '
             f'notes={self.notes}, snippet={self.snippet})'
         )
